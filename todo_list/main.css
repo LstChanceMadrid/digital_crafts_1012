@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+}
+
+.bg {}
+
+.header {}
+
+    .title {}
+
+    .task-input-label {}
+
+    .task-input {}
+
+    .task-add-button {}
+
+.task-list-container {}
+
+    .task-list {}
+
+        .task-list-legend {}
+
+        .task-container {}
+
+            .task-checkbox {}
+
+            .task-title {}
+
+            .task-remove-button {}
+
+            
