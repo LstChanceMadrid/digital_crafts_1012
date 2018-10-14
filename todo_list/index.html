@@ -10,7 +10,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link rel="stylesheet" href="" />
+        <link rel="stylesheet" href="main.css" />
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -23,18 +23,22 @@
 
             <label class="task-input-label">Enter Task: </label>
 
-            <input id="task-input" class="task-input" type="text" placeholder="Task Name" />
+            <input id="task-input" class="task-input" type="text" placeholder="Task Name" required autofocus />
             
             <input id="task-add-button" class="task-add-button" type="button" value="Add" />
         </header>
 
         <main class="task-list-container">
             <fieldset id="pending-tasks" class="task-list">
-                <legend id="pending-tasks-legend" class="task-list-legend">Pending Tasks: </legend>
+                <legend id="pending-tasks-legend" class="task-list-legend">Pending Tasks</legend>
+                
+                <!-- inserted tasks pending -->
             </fieldset>
 
             <fieldset id="completed-tasks" class="task-list">
-                    <legend id="completed-tasks-legend" class="task-list-legend">Completed Tasks: </legend>
+                <legend id="completed-tasks-legend" class="task-list-legend">Completed Tasks</legend>
+            
+                <!-- inserted tasks completed -->
             </fieldset>
         </main>
 
