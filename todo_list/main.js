@@ -12,8 +12,9 @@ let completedTasks = $('#completed-tasks');
 
 let completedTasksLegend = $('#completed-tasks-legend');
 
+
 taskInput.keydown(function(e) {
-    if (e.which === 13) {
+    if (e.which === 13 && taskInput.val() !== "") {
         taskAddButton.click();
     }
 });
@@ -22,10 +23,17 @@ taskInput.keydown(function(e) {
 
 // the button that creates a task
 taskAddButton.click(function() {
+    if (taskInput.val() === "") {
+        taskInput.focus();
+        return false;
+    }
 
 
 
 
+
+    // creates the task with a checkbox, title, and remove button
+    
     let taskCheckbox = $('<input class="task-checkbox" type="checkbox" />');
     let taskCheckboxContainer = $('<div class="task-checkbox-container">');
     taskCheckboxContainer.append(taskCheckbox);
@@ -39,7 +47,6 @@ taskAddButton.click(function() {
     let taskRemoveButton = $('<input id="task-remove-button" type="button" value="Remove" />');
     taskRemoveButtonContainer.append(taskRemoveButton);
 
-    // creates the task with a checkbox, title, and remove button
     let taskContainer = $('<div class="task-container" ondrop="dropping()">');
     taskContainer.append(taskCheckboxContainer);
     taskContainer.append(taskName);
@@ -47,19 +54,29 @@ taskAddButton.click(function() {
     taskContainer.class = "task-container";
 
 
-
     // automatically adds the new task to the pending tasks list
     pendingTasks.append(taskContainer);
 
 
+
     // moves the task from one list to the other
-    taskCheckbox.click(function() {
+    let changeCheckbox = taskCheckbox.change(function() {
         if (taskCheckbox.prop('checked')) {
             taskContainer.appendTo(completedTasks);
         } else {
             taskContainer.appendTo(pendingTasks);
         }
     });
+    
+    let changeCheckbox2 = taskCheckbox.change('drop', function() {
+        if (completedTasksLegend.parent().is(taskContainer.parent())) {
+            taskCheckbox.prop('checked')
+
+            console.log(taskCheckbox.prop('checked'))
+            console.log('hahfahsdf')
+        }
+    })
+
 
     // removes the task from the current parrent list
     taskRemoveButton.click(function () {
@@ -78,14 +95,19 @@ taskAddButton.click(function() {
     let appendTo = taskList.sortable('option', 'appendTo');
     taskList.sortable('option', 'appendTo', document.body);
 
+
+
+
     // allows for the pending tasks to be drag and dropped to the completed tasks
     pendingTasks.sortable({
         connectWith: completedTasks,
         cancel: '.task-list-legend'
     });
 
+
     let connectWithCompleted = pendingTasks.sortable('option', 'connectWith');
     taskList.sortable('option', 'connectWithCompleted', completedTasks);
+
 
     // allows for the completed tasks to be drag and dropped to the pending tasks
     completedTasks.sortable({
@@ -95,11 +117,17 @@ taskAddButton.click(function() {
 
     let connectWithPending = completedTasks.sortable('option', 'connectWith');
     taskList.sortable('option', 'connectWithPending', pendingTasks);
-    console.log('hi')
-// if ondrop = blah
-taskList.on('dragover', function(e) {
-    e.preventDefault();
+
+
+
+
+
+  
+
 });
+
+
+
 
     // taskContainer.on('drop', function() {
     //     if (completedTasksLegend.parent().is(taskContainer.parent())) {
@@ -113,7 +141,7 @@ taskList.on('dragover', function(e) {
         
     // });
 
-})
+
 
 // if (completedTasksLegend.parent().is(taskContainer.parent())) {
 //     $(".task-checkbox input:checkbox").change(function() {
