@@ -11,8 +11,7 @@ let pendingTasksLegend = $('#pending-tasks-legend');
 let completedTasks = $('#completed-tasks');
 
 let completedTasksLegend = $('#completed-tasks-legend');
-
-
+let taskList = $('.task-list');
 taskInput.keydown(function(e) {
     if (e.which === 13 && taskInput.val() !== "") {
         taskAddButton.click();
@@ -29,15 +28,12 @@ taskAddButton.click(function() {
     }
 
 
-
-
-
     // creates the task with a checkbox, title, and remove button
     
     let taskCheckbox = $('<input class="task-checkbox" type="checkbox" />');
     let taskCheckboxContainer = $('<div class="task-checkbox-container">');
     taskCheckboxContainer.append(taskCheckbox);
-
+    
     let taskTitle = $('<h2 class="task-title">');
     let taskName = taskInput.val();
     taskTitle.html(taskName);
@@ -51,15 +47,25 @@ taskAddButton.click(function() {
     taskContainer.append(taskCheckboxContainer);
     taskContainer.append(taskName);
     taskContainer.append(taskRemoveButtonContainer);
-    taskContainer.class = "task-container";
 
 
     // automatically adds the new task to the pending tasks list
+ 
+
     pendingTasks.append(taskContainer);
 
-
+    // taskContainer.change(function() {
+    //     console.log('hey');
+    //     console.log(taskCheckbox.prop('checked'))
+    //     taskCheckbox.prop('checked', true);
+    //     console.log(taskCheckbox.prop('checked'))
+    //     if (taskCheckbox.prop('checked') ){
+    //     taskCheckbox.prop('checked', false)
+    //     }
+    // })
 
     // moves the task from one list to the other
+
     let changeCheckbox = taskCheckbox.change(function() {
         if (taskCheckbox.prop('checked')) {
             taskContainer.appendTo(completedTasks);
@@ -68,24 +74,28 @@ taskAddButton.click(function() {
         }
     });
     
-    let changeCheckbox2 = taskCheckbox.change('drop', function() {
-        if (completedTasksLegend.parent().is(taskContainer.parent())) {
-            taskCheckbox.prop('checked')
 
+    //
+    //
+    //
+    let changeCheckbox2 = taskContainer.change(function(event, ui) {
+        if (completedTasksLegend.parent().is(taskContainer.parent())) {
             console.log(taskCheckbox.prop('checked'))
-            console.log('hahfahsdf')
+            console.log('yea')
+        } else {
+            console.log('nope')
         }
     })
 
 
     // removes the task from the current parrent list
+
     taskRemoveButton.click(function () {
         taskContainer.detach();
     });
 
-
-
     // allows for the tasks to be sorted by drag and drop
+
     let taskList = $('.task-list');
     taskList.sortable({
         appendTo: document.body,
@@ -99,17 +109,18 @@ taskAddButton.click(function() {
 
 
     // allows for the pending tasks to be drag and dropped to the completed tasks
+
     pendingTasks.sortable({
         connectWith: completedTasks,
         cancel: '.task-list-legend'
     });
-
 
     let connectWithCompleted = pendingTasks.sortable('option', 'connectWith');
     taskList.sortable('option', 'connectWithCompleted', completedTasks);
 
 
     // allows for the completed tasks to be drag and dropped to the pending tasks
+
     completedTasks.sortable({
         connectWith: pendingTasks,
         cancel: '.task-list-legend'
@@ -117,36 +128,34 @@ taskAddButton.click(function() {
 
     let connectWithPending = completedTasks.sortable('option', 'connectWith');
     taskList.sortable('option', 'connectWithPending', pendingTasks);
+    return taskContainer
 
 
 
 
 
-  
+
+
+
+
+    // taskContainer.sortable();
+
+      
+    //   taskContainer.on('stop', function() {
+    //     if (completedTasksLegend.parent().is(taskContainer.parent())) {
+    //         console.log(taskCheckbox.prop('checked'))
+    //         taskCheckbox.prop('checked', true)
+    //         console.log('yea')
+    //         console.log(taskCheckbox.prop('checked'))
+    //     } else {
+    //         console.log('nope')
+    //     }
+    //   });
+
 
 });
 
 
 
-
-    // taskContainer.on('drop', function() {
-    //     if (completedTasksLegend.parent().is(taskContainer.parent())) {
-    //         console.log('yes')
-    //         taskCheckbox.prop('checked')
-    //     }
-    
-    //     if (pendingTasksLegend.parent().is(taskContainer.parent())){
-    //         console.log('no')
-    //     }
-        
-    // });
-
-
-
-// if (completedTasksLegend.parent().is(taskContainer.parent())) {
-//     $(".task-checkbox input:checkbox").change(function() {
-//         var ischecked= $(this).is(':checked');
-//         if(!ischecked)
-//         alert('unchecked ' + $(this).val());
-//     }); 
-//     }
+// A movestart event must be bound
+// and explicitly enabled
